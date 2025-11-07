@@ -2,9 +2,9 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <title>ช่อดอกไม้ตามชื่อ</title>
+  <title>ช่อดอกไม้ตามชื่อขอBCU</title>
 
-  <!-- โหลดฟอนต์ TKMoojeawTester -->
+  <!-- โหลดฟอนต์ PG Sigma DEMO -->
   <style>
     @font-face {
       font-family: 'TKMoojeawTester';
@@ -23,21 +23,19 @@
       align-items: center;
     }
 
-    /* หัวข้อแบบดุ้กดิ้ก */
+    /* หัวข้อแบบขยับดุ๊กดิ๊ก */
     h1 {
-      color: #000000;
+      color: #000;
       text-align: center;
       margin-bottom: 20px;
-      font-size: 2em;
-      animation: wiggle 1.8s infinite ease-in-out;
-      transform-origin: center;
+      animation: wiggle 2s infinite ease-in-out;
     }
 
     @keyframes wiggle {
-      0%, 100% { transform: rotate(0deg) scale(1); }
-      25% { transform: rotate(2deg) scale(1.05); }
-      50% { transform: rotate(-2deg) scale(1.05); }
-      75% { transform: rotate(1deg) scale(1); }
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(1deg); }
+      50% { transform: rotate(-1deg); }
+      75% { transform: rotate(1deg); }
     }
 
     .bouquet {
@@ -51,14 +49,18 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 120px;
-      transform: translate(-50%, -50%) rotate(calc(360deg * var(--i) / 8));
-      transition: transform 0.3s ease;
+      width: 100px;
+      transform: translate(-50%, -50%) rotate(calc(360deg * var(--i) / 10));
+      animation: bloom 2s ease-out;
     }
 
     .flower img {
       width: 100%;
-      border-radius: 50%;
+    }
+
+    @keyframes bloom {
+      from { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+      to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
     }
 
     .keyboard {
@@ -88,19 +90,20 @@
       background-color: #FFC107;
     }
 
-    .download-btn {
-      background-color: #A4DDED;
+    #downloadBtn {
+      background-color: #f48fb1;
+      color: white;
       border: none;
-      padding: 12px 20px;
-      border-radius: 12px;
+      padding: 10px 20px;
       font-size: 1em;
+      border-radius: 10px;
       margin-top: 20px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s;
     }
 
-    .download-btn:hover {
-      background-color: #79cce1;
+    #downloadBtn:hover {
+      background-color: #f06292;
     }
 
     footer {
@@ -111,7 +114,7 @@
 
     @media (min-width: 768px) {
       .flower {
-        width: 150px;
+        width: 120px;
       }
 
       .key {
@@ -130,19 +133,17 @@
 
   <h1>พิมพ์ชื่อคุณเพื่อสร้างช่อดอกไม้SSUCOMMU</h1>
 
-  <div id="bouquet-container">
-    <div class="bouquet" id="bouquet"></div>
-  </div>
+  <div class="bouquet" id="bouquet"></div>
+
+  <button id="downloadBtn">📸 ดาวน์โหลดช่อดอกไม้</button>
 
   <div class="keyboard" id="keyboard"></div>
-
-  <button class="download-btn" id="downloadBtn">ดาวน์โหลดช่อดอกไม้ 🌸</button>
 
   <footer>
     <p>SIBSILPASIRISART</p>
   </footer>
 
-  <!-- โหลด html2canvas เพื่อแปลงเป็นรูปภาพ -->
+  <!-- โหลด html2canvas สำหรับแปลงเป็นรูป -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <script>
@@ -203,6 +204,7 @@
     };
     keyboard.appendChild(backspace);
 
+    // ฟังก์ชันเพิ่มดอกไม้
     function addFlower(letter, index) {
       const flower = document.createElement('div');
       flower.className = 'flower';
@@ -211,12 +213,12 @@
       bouquet.appendChild(flower);
     }
 
-    // ปุ่มดาวน์โหลด
+    // ปุ่มดาวน์โหลดเป็นภาพ
     document.getElementById('downloadBtn').addEventListener('click', () => {
-      html2canvas(document.getElementById('bouquet-container')).then(canvas => {
+      html2canvas(document.getElementById('bouquet')).then(canvas => {
         const link = document.createElement('a');
-        link.download = 'bouquet.png';
-        link.href = canvas.toDataURL('image/png');
+        link.download = 'flower_bouquet_SSUCOMMU.png';
+        link.href = canvas.toDataURL();
         link.click();
       });
     });
@@ -224,3 +226,4 @@
 
 </body>
 </html>
+
