@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>ช่อดอกไม้ตามชื่อขอBCU</title>
 
-  <!-- โหลดฟอนต์ PG Sigma DEMO -->
+  <!-- โหลดฟอนต์ TKMoojeawTester -->
   <style>
     @font-face {
       font-family: 'TKMoojeawTester';
@@ -23,10 +23,21 @@
       align-items: center;
     }
 
+    /* หัวข้อแบบดุ้กดิ้ก */
     h1 {
       color: #000000;
       text-align: center;
       margin-bottom: 20px;
+      font-size: 2em;
+      animation: wiggle 1.8s infinite ease-in-out;
+      transform-origin: center;
+    }
+
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      25% { transform: rotate(2deg) scale(1.05); }
+      50% { transform: rotate(-2deg) scale(1.05); }
+      75% { transform: rotate(1deg) scale(1); }
     }
 
     .bouquet {
@@ -40,12 +51,14 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 500%;
-      transform: translate(-50%, -50%) rotate(calc(360deg * var(--i) / 0));
+      width: 120px;
+      transform: translate(-50%, -50%) rotate(calc(360deg * var(--i) / 8));
+      transition: transform 0.3s ease;
     }
 
     .flower img {
       width: 100%;
+      border-radius: 50%;
     }
 
     .keyboard {
@@ -75,9 +88,30 @@
       background-color: #FFC107;
     }
 
+    .download-btn {
+      background-color: #A4DDED;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 1em;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .download-btn:hover {
+      background-color: #79cce1;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #888;
+    }
+
     @media (min-width: 768px) {
       .flower {
-        width: 280px;
+        width: 150px;
       }
 
       .key {
@@ -96,9 +130,20 @@
 
   <h1>พิมพ์ชื่อคุณเพื่อสร้างช่อดอกไม้SSUCOMMU</h1>
 
-  <div class="bouquet" id="bouquet"></div>
+  <div id="bouquet-container">
+    <div class="bouquet" id="bouquet"></div>
+  </div>
 
   <div class="keyboard" id="keyboard"></div>
+
+  <button class="download-btn" id="downloadBtn">ดาวน์โหลดช่อดอกไม้ 🌸</button>
+
+  <footer>
+    <p>SIBSILPASIRISART</p>
+  </footer>
+
+  <!-- โหลด html2canvas เพื่อแปลงเป็นรูปภาพ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <script>
     const flowerMap = {
@@ -165,11 +210,17 @@
       flower.innerHTML = `<img src="${flowerMap[letter]}" alt="${letter}">`;
       bouquet.appendChild(flower);
     }
-  </script>
 
-  <footer style="margin-top: 40px; font-size: 0.9em; color: #888;">
-    <p>SIBSILPASIRISART</p>
-  </footer>
+    // ปุ่มดาวน์โหลด
+    document.getElementById('downloadBtn').addEventListener('click', () => {
+      html2canvas(document.getElementById('bouquet-container')).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'bouquet.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    });
+  </script>
 
 </body>
 </html>
