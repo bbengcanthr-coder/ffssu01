@@ -2,10 +2,9 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <title>ช่อดอกไม้ตามชื่อขอBCU</title>
+  <title>ช่อดอกไม้ตามชื่อ</title>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
+  <!-- โหลดฟอนต์ -->
   <style>
     @font-face {
       font-family: 'TKMoojeawTester';
@@ -24,17 +23,19 @@
       align-items: center;
     }
 
-    /* ข้อความขยับดุ๊กดิ๊ก */
+    /* หัวข้อขยับดุ๊กดิ๊ก */
     h1 {
       color: #000000;
       text-align: center;
       margin-bottom: 20px;
-      animation: bounce 2s infinite ease-in-out;
+      animation: wiggle 2s ease-in-out infinite;
     }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(2deg); }
+      50% { transform: rotate(-2deg); }
+      75% { transform: rotate(2deg); }
     }
 
     .bouquet {
@@ -48,19 +49,13 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 500%;
-      transform: translate(-50%, -50%) rotate(calc(360deg * var(--i) / 12));
-      animation: gentle-move 3s ease-in-out infinite alternate;
+      width: 80px;
+      height: 80px;
+      transform: translate(-50%, -50%) rotate(calc(360deg * var(--i) / 10));
     }
 
     .flower img {
       width: 100%;
-    }
-
-    /* ดอกไม้ขยับนิดๆ */
-    @keyframes gentle-move {
-      0% { transform: translate(-50%, -50%) rotate(calc(360deg * var(--i) / 12)) scale(1); }
-      100% { transform: translate(-50%, -52%) rotate(calc(360deg * var(--i) / 12 + 5deg)) scale(1.05); }
     }
 
     .keyboard {
@@ -90,27 +85,32 @@
       background-color: #FFC107;
     }
 
-    /* ปุ่มบันทึก */
-    #saveBtn {
+    #downloadBtn {
       margin-top: 20px;
-      padding: 10px 25px;
-      background-color: #FF80AB;
+      background-color: #ff87a3;
       color: white;
       border: none;
-      border-radius: 12px;
+      padding: 10px 20px;
+      border-radius: 10px;
       cursor: pointer;
-      font-size: 1.2em;
-      transition: 0.3s;
+      font-size: 1.1em;
+      transition: background-color 0.2s;
     }
 
-    #saveBtn:hover {
-      background-color: #ff5c8d;
-      transform: scale(1.05);
+    #downloadBtn:hover {
+      background-color: #ff5c87;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #888;
     }
 
     @media (min-width: 768px) {
       .flower {
-        width: 280px;
+        width: 100px;
+        height: 100px;
       }
 
       .key {
@@ -133,7 +133,14 @@
 
   <div class="keyboard" id="keyboard"></div>
 
-  <button id="saveBtn">💾 บันทึกช่อดอกไม้</button>
+  <button id="downloadBtn">ดาวน์โหลดภาพช่อดอกไม้</button>
+
+  <footer>
+    <p>SIBSILPASIRISART</p>
+  </footer>
+
+  <!-- โหลด html2canvas -->
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
   <script>
     const flowerMap = {
@@ -169,10 +176,9 @@
 
     const keyboard = document.getElementById('keyboard');
     const bouquet = document.getElementById('bouquet');
-    const saveBtn = document.getElementById('saveBtn');
     let flowerCount = 0;
 
-    // สร้างปุ่ม A-Z
+    // สร้างปุ่ม A-Z + 1-2
     'ABCDEFGHIJKLMNOPQRSTUVWXYZ12'.split('').forEach((letter, index) => {
       const key = document.createElement('div');
       key.className = 'key';
@@ -181,7 +187,7 @@
       keyboard.appendChild(key);
     });
 
-    // ปุ่ม Backspace
+    // ปุ่มลบ
     const backspace = document.createElement('div');
     backspace.className = 'key backspace';
     backspace.textContent = '⌫';
@@ -202,21 +208,16 @@
       bouquet.appendChild(flower);
     }
 
-    // ปุ่มบันทึกภาพ
-    saveBtn.onclick = () => {
-      html2canvas(bouquet, { scale: 3, backgroundColor: null }).then(canvas => {
+    // ปุ่มดาวน์โหลด
+    document.getElementById('downloadBtn').addEventListener('click', () => {
+      html2canvas(document.getElementById('bouquet')).then(canvas => {
         const link = document.createElement('a');
-        link.download = 'SSUCOMMU_Bouquet.png';
-        link.href = canvas.toDataURL('image/png');
+        link.download = 'my_bouquet.png';
+        link.href = canvas.toDataURL();
         link.click();
       });
-    };
+    });
   </script>
-
-  <footer style="margin-top: 40px; font-size: 0.9em; color: #888;">
-    <p>SIBSILPASIRISART</p>
-  </footer>
 
 </body>
 </html>
-
