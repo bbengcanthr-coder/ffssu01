@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>ช่อดอกไม้ตามชื่อ</title>
 
-  <!-- โหลดฟอนต์ -->
+  <!-- โหลดฟอนต์ PG Sigma DEMO -->
   <style>
     @font-face {
       font-family: 'TKMoojeawTester';
@@ -23,19 +23,10 @@
       align-items: center;
     }
 
-    /* หัวข้อขยับดุ๊กดิ๊ก */
     h1 {
       color: #000000;
       text-align: center;
       margin-bottom: 20px;
-      animation: wiggle 2s ease-in-out infinite;
-    }
-
-    @keyframes wiggle {
-      0%, 100% { transform: rotate(0deg); }
-      25% { transform: rotate(2deg); }
-      50% { transform: rotate(-2deg); }
-      75% { transform: rotate(2deg); }
     }
 
     .bouquet {
@@ -49,9 +40,8 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 80px;
-      height: 80px;
-      transform: translate(-50%, -50%) rotate(calc(360deg * var(--i) / 10));
+      width: 500%;
+      transform: translate(-50%, -50%) rotate(calc(360deg * var(--i) / 0));
     }
 
     .flower img {
@@ -85,32 +75,9 @@
       background-color: #FFC107;
     }
 
-    #downloadBtn {
-      margin-top: 20px;
-      background-color: #ff87a3;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 1.1em;
-      transition: background-color 0.2s;
-    }
-
-    #downloadBtn:hover {
-      background-color: #ff5c87;
-    }
-
-    footer {
-      margin-top: 40px;
-      font-size: 0.9em;
-      color: #888;
-    }
-
     @media (min-width: 768px) {
       .flower {
-        width: 100px;
-        height: 100px;
+        width: 280px;
       }
 
       .key {
@@ -132,15 +99,6 @@
   <div class="bouquet" id="bouquet"></div>
 
   <div class="keyboard" id="keyboard"></div>
-
-  <button id="downloadBtn">ดาวน์โหลดภาพช่อดอกไม้</button>
-
-  <footer>
-    <p>SIBSILPASIRISART</p>
-  </footer>
-
-  <!-- โหลด html2canvas -->
-  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
   <script>
     const flowerMap = {
@@ -178,7 +136,7 @@
     const bouquet = document.getElementById('bouquet');
     let flowerCount = 0;
 
-    // สร้างปุ่ม A-Z + 1-2
+    // สร้างปุ่ม A-Z
     'ABCDEFGHIJKLMNOPQRSTUVWXYZ12'.split('').forEach((letter, index) => {
       const key = document.createElement('div');
       key.className = 'key';
@@ -187,7 +145,7 @@
       keyboard.appendChild(key);
     });
 
-    // ปุ่มลบ
+    // ปุ่ม Backspace
     const backspace = document.createElement('div');
     backspace.className = 'key backspace';
     backspace.textContent = '⌫';
@@ -207,17 +165,11 @@
       flower.innerHTML = `<img src="${flowerMap[letter]}" alt="${letter}">`;
       bouquet.appendChild(flower);
     }
-
-    // ปุ่มดาวน์โหลด
-    document.getElementById('downloadBtn').addEventListener('click', () => {
-      html2canvas(document.getElementById('bouquet')).then(canvas => {
-        const link = document.createElement('a');
-        link.download = 'my_bouquet.png';
-        link.href = canvas.toDataURL();
-        link.click();
-      });
-    });
   </script>
+
+  <footer style="margin-top: 40px; font-size: 0.9em; color: #888;">
+    <p>SIBSILPASIRISART</p>
+  </footer>
 
 </body>
 </html>
